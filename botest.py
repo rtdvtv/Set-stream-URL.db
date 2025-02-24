@@ -32,7 +32,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Настройка бота
-# API_TOKEN = '7650957440:AAEDT9Ru9J69LmQTN9TgSiineMEiNrjpkpY'  # Замените на ваш токен
+# API_TOKEN = 'eMEiNrjpkpY'  # Замените на ваш токен
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
