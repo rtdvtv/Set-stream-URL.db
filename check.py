@@ -44,7 +44,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Настройка бота
-API_TOKEN = '7650957440:AAEDT9Ru9J69LmQTN9TgSiineMEiNrjpkpY'  # Замените на ваш токен
+API_TOKEN = 'YOUR_TOKEN_BOT'  # Замените на ваш токен
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
@@ -137,7 +137,7 @@ async def process_name(message: types.Message, state: FSMContext):
     username = message.from_user.username
     message_text = "CHECK"  # Текст кнопки
     date = datetime.now(kiev_tz)  # Устанавливаем время в часовом поясе Киев
-    promt = "Ввод пользователя"  # Пример промта (можно заменить на ввод от пользователя)
+    promt = "Ввод пользователя"  # Промт пользователя
 
     try:
         # Сохраняем данные в базу данных
@@ -213,7 +213,6 @@ async def process_list_urls(message: types.Message, state: FSMContext):
         reply_markup=builder.as_markup()
     )
 
-
 # Обработчик для удаления URL через inline-кнопку
 @dp.callback_query(lambda c: c.data.startswith("delete_"))
 async def process_delete_url(callback: types.CallbackQuery):
@@ -258,7 +257,7 @@ async def process_online_tv(message: types.Message, state: FSMContext):
     if current_state:
         await state.clear()  # Сбрасываем состояние
 
-    # Получаем последний добавленный URL
+    # Получаем последний добавленный в базу URL
     last_url = session.query(Message).order_by(Message.id.desc()).first()
 
     if not last_url:
@@ -271,6 +270,7 @@ async def process_online_tv(message: types.Message, state: FSMContext):
 
 # Запуск бота
 async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 
